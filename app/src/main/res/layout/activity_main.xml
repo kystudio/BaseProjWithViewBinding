@@ -6,43 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:id="@+id/flNull"
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.base.HomeFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/flTitle"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:layout_constraintTop_toBottomOf="@id/flNull">
-
-        <include
-            android:id="@+id/titleBar"
-            layout="@layout/view_title_bar" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_home" />
 
     <TextView
-        android:id="@+id/tvInfo"
+        android:id="@+id/tv_info_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:layout_marginBottom="48dp"
+        android:background="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.base.HomeFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flTitle"
-        tools:layout="@layout/fragment_home" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
