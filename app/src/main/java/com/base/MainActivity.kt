@@ -1,10 +1,9 @@
 package com.base
 
 import com.base.databinding.ActivityMainBinding
+import com.viewbinding.base.BaseBindingActivity
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-
-    override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+class MainActivity : BaseBindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun initData() {
         setStatusBar(0)

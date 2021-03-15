@@ -1,23 +1,27 @@
-package com.base
+@file:Suppress("unused")
+
+package com.viewbinding.base
 
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
 
-abstract class BaseActivity<T : ViewBinding?> : AppCompatActivity() {
-    private var _binding: T? = null
+abstract class BaseBindingActivity<VB : ViewBinding>(
+    private val inflate: (LayoutInflater) -> VB
+) : AppCompatActivity() {
 
-    val binding get() = _binding!!
+    lateinit var binding: VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = getViewBinding()
-        setContentView(_binding!!.root)
+        binding = inflate(layoutInflater)
+        setContentView(binding.root)
         setStatusBar(0)
         initData()
     }
@@ -49,11 +53,5 @@ abstract class BaseActivity<T : ViewBinding?> : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
-    }
-
-    abstract fun getViewBinding(): T
     abstract fun initData()
 }
