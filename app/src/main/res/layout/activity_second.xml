@@ -10,14 +10,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".SecondActivity">
 
         <fragment
-            android:id="@+id/home_fragment"
-            android:name="com.base.HomeFragment"
+            android:id="@+id/second_fragment"
+            android:name="com.base.SecondFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_home" />
+            tools:layout="@layout/fragment_second" />
 
         <TextView
             android:id="@+id/tv_info_activity"

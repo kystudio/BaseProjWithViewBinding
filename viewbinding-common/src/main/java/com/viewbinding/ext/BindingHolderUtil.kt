@@ -7,7 +7,6 @@ import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
-
 @JvmName("bind")
 fun <VB : ViewBinding> BaseViewHolder.withBinding(bind: (View) -> VB): BaseViewHolder =
     BaseViewHolderWithBinding(bind(itemView))

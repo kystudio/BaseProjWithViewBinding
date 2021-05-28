@@ -22,11 +22,6 @@ abstract class BaseBindingActivity<VB : ViewBinding>(
         super.onCreate(savedInstanceState)
         binding = inflate(layoutInflater)
         setContentView(binding.root)
-        setStatusBar(0)
-        initData()
-    }
-
-    fun setStatusBar(state: Int) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             val window = window
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -35,7 +30,11 @@ abstract class BaseBindingActivity<VB : ViewBinding>(
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = Color.TRANSPARENT
         }
+        setStatusBar(0)
+        initData()
+    }
 
+    fun setStatusBar(state: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when (state) {
                 0 -> {
