@@ -1,6 +1,6 @@
 package com.base
 
-data class Item(val number: Int, val colorRes: Int, val selected: Boolean = false){
+data class Item(val number: Int, val colorRes: Int, val selected: Boolean = false) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -1,15 +1,11 @@
 package com.base
 
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.DiffUtil
 import com.base.databinding.FragmentHomeBinding
 import com.base.databinding.ItemFooBinding
 import com.viewbinding.base.BaseBindingFragment
 import com.viewbinding.ext.ListAdapter
-import com.viewbinding.ext.onBinding
 import com.viewbinding.ext.onItemClick
 
 class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -24,6 +20,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
 
         val data = mutableListOf(Foo("s1"), Foo("s2"), Foo("s3"), Foo("s4"))
 
+        val fooAdapter = FooAdapter(data)
+        fooAdapter.onItemClick = { foo, pos ->
+            Toast.makeText(
+                requireContext(),
+                "fooAdapter 点击了${foo.name}, position: $pos",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         val foo2Adapter = Foo2Adapter()
         foo2Adapter.data = data
         foo2Adapter.setOnItemClickListener { _, _, position ->
@@ -36,32 +41,21 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
 
         val foo4Adapter = Foo4Adapter()
         foo4Adapter.submitList(data)
-        foo4Adapter.onItemClick = {
+        foo4Adapter.onItemClick = { foo, pos ->
             Toast.makeText(
                 requireContext(),
-                "foo4Adapter 点击了${data[it].name}, position: $it",
+                "foo4Adapter 点击了${foo.name}, position: $pos",
                 Toast.LENGTH_SHORT
             )
                 .show()
         }
 
-        val diffCallback = object : DiffUtil.ItemCallback<Foo>() {
-            override fun areItemsTheSame(oldItem: Foo, newItem: Foo): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Foo, newItem: Foo): Boolean {
-                return oldItem.name == newItem.name
-            }
-        }
-        val foo5Adapter = ListAdapter(ItemFooBinding::inflate, diffCallback) {
-            onBinding {
-                binding.tvName.text = data[it].name
-            }
+        val foo5Adapter = ListAdapter(DiffCallback(), ItemFooBinding::inflate) { item ->
+            binding.tvName.text = item.name
             onItemClick {
                 Toast.makeText(
                     requireContext(),
-                    "foo5Adapter 点击了${data[it].name}, position: $it",
+                    "foo5Adapter 点击了${item.name}, position: $it",
                     Toast.LENGTH_SHORT
                 )
                     .show()
@@ -69,17 +63,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
         }
         foo5Adapter.submitList(data)
 
+        foo2Adapter.setDiffCallback(DiffCallback())
+
         binding.rvInfo.adapter = foo4Adapter
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val oldData = foo4Adapter.currentList
-            data.add(1,Foo("s5"))
-            data.add(3,Foo("s6"))
-            foo4Adapter.submitList(data) {
-                val diffResult = DiffUtil
-                    .calculateDiff(MyDiffCallback(oldData, data))
-                diffResult.dispatchUpdatesTo(foo4Adapter)
-            }
-        }, 3000)
+        binding.tvInfo.setOnClickListener {
+            val newData =
+                mutableListOf(Foo("s1"), Foo("s2"), Foo("s5"), Foo("s6"), Foo("s3"), Foo("s4"))
+            foo4Adapter.submitList(newData)
+//            foo2Adapter.setDiffNewData(newData)
+        }
     }
 }

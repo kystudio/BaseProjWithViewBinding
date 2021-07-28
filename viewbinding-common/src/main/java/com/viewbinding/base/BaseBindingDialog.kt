@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
 
-
 abstract class BaseBindingDialog<VB : ViewBinding>(
     context: Context,
     themeResId: Int,
@@ -24,5 +23,4 @@ abstract class BaseBindingDialog<VB : ViewBinding>(
         binding = inflate(layoutInflater)
         setContentView(binding.root)
     }
-
 }

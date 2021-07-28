@@ -18,11 +18,12 @@ abstract class BaseBindingFragment<VB : ViewBinding>(
 
     private var _binding: VB? = null
     val binding: VB get() = _binding!!
-    lateinit var activity: AppCompatActivity
+    private var _activity: AppCompatActivity? = null
+    val mActivity: AppCompatActivity get() = _activity!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = context as AppCompatActivity
+        _activity = context as AppCompatActivity
     }
 
     override fun onCreateView(
